@@ -29,12 +29,19 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
 
+#include "Poco/MD5Engine.h"
+#include "Poco/DigestStream.h"
+
+#include <iostream>
 
 static void destroyWindowCb(GtkWidget* widget, GtkWidget* window);
 static gboolean closeWebViewCb(WebKitWebView* webView, GtkWidget* window);
+static void test();
 
 int main(int argc, char* argv[])
 {
+    test();
+
     // Initialize GTK+
     gtk_init(&argc, &argv);
 
@@ -69,6 +76,14 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+static void test()
+{
+    Poco::MD5Engine md5;
+    Poco::DigestOutputStream ds(md5);
+    ds << "abcdefghijklmnopqrstuvwxyz";
+    ds.close();
+    std::cout << Poco::DigestEngine::digestToHex(md5.digest()) << std::endl;
+}
 
 static void destroyWindowCb(GtkWidget* widget, GtkWidget* window)
 {

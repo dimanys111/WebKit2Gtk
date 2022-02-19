@@ -7,7 +7,12 @@ project(${TARGET} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 add_executable(${TARGET} main.cpp)
+
+target_link_libraries(${TARGET} ${CONAN_LIBS})
 
 find_package(PkgConfig REQUIRED)
 
